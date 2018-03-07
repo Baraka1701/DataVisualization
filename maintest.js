@@ -36,6 +36,9 @@ var svg = d3.select("body").append("svg")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
+//const color = d3.scaleOrdinal(d3.schemeCategory10);
+const color = d3.scale.category10();
+
 d3.csv("bar-data.csv", function(error, data) {
 
     data.forEach(function(d) {
@@ -69,7 +72,10 @@ d3.csv("bar-data.csv", function(error, data) {
   svg.selectAll("bar")
       .data(data)
     .enter().append("rect")
-      .style("fill", "steelblue")
+      //.style("fill", "steelblue")
+      .style("fill", function(d) {
+        return color(d.state);
+     })
       .attr("x", function(d) { return x(d.state); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.value); })
@@ -85,7 +91,12 @@ function AppendLegend() {
     // building a legend is as simple as binding
     // more elements to the same data. in this case,
     // <text> tags
+    const rightAligned = width - 50;
+
     svg.append('g')
+      //.attr("transform", `translate(150, 50)`)  
+      //.attr("transform", `translate(${width}, ${height})`)
+      .attr("transform", `translate(${rightAligned}, ${0})`)
       .attr('class', 'legend')
         .selectAll('text')  // TENGO QUE AÑADIR TIP. 
         .data(bardata)
