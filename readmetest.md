@@ -58,6 +58,41 @@ function AppendLegend() {
 }
 '''
 
-Problem!: All data for state is grouped in same TEXT when you use Indextest. Despite I read toolkit, I don´t know exactly how to separate databar indexes in legend...
+Problem!: All data for state is grouped in same TEXT when you use Indextest. Despite I read toolkit, I don´t know exactly how to separate databar indexes in legend... So, thanks to Braulio, we depure some important notes:
+
+1) Change indextest for index.html.
+2) With a dedicated process... Create a virtual server, (using ZOOM) according to instructions throught slack:
 
 
+  Primero ejecuta desde ms-dos
+  npm init -y
+  Despues ejecuta
+  npm install lite-server –d
+  Despues habre el fichero package.json y añade la linea de start
+    "scripts": {
+      "start": "lite-server",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+
+  Ahora desde ms-dos haz un
+  npm start
+
+3) Acces to a http://localhost:3000 o 3001...
+
+4) mk package.json
+
+After all it, we add some transformations just for change the letter and colour attributions in maintest:
+
+  .attr("transform", `translate(150, 50)`)
+
+  .attr("transform", `translate(${width}, ${height})`)
+
+    const color = d3.scale.category10();
+
+.style("fill", function(d) {
+
+        return color(d.state);
+
+     })
+
+So finally, project is end!! 
